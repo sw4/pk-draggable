@@ -12,6 +12,12 @@ var pk = pk || {};
         pk.addClass(handle, 'pk-drag-draggable');
         var fn = opt.listeners;
         var m = opt.move;
+        if (m && typeof m !== 'object') {
+            m= {
+                x: true,
+                y: true
+            };
+        }
         var dragging = false;
         var dragStart = {}, dragEnd = {};
         var startOffset;
@@ -56,14 +62,14 @@ var pk = pk || {};
         });
 
         function contain() {
-            if (el.offsetLeft < 0) {
+            if (m.x && el.offsetLeft < 0) {
                 el.style.left = 0 + 'px';
-            } else if (el.offsetLeft > container.element.offsetWidth - el.offsetWidth) {
+            } else if (m.x && el.offsetLeft > container.element.offsetWidth - el.offsetWidth) {
                 el.style.left = container.element.offsetWidth - el.offsetWidth + 'px';
             }
-            if (el.offsetTop < 0) {
+            if (m.y && el.offsetTop < 0) {
                 el.style.top = 0 + 'px';
-            } else if (el.offsetTop > container.element.offsetHeight - el.offsetHeight) {
+            } else if (m.y && el.offsetTop > container.element.offsetHeight - el.offsetHeight) {
                 el.style.top = container.element.offsetHeight - el.offsetHeight + 'px';
             }
         }
@@ -74,24 +80,9 @@ var pk = pk || {};
                 x: e.clientX,
                 y: e.clientY
             };
-
-            function move(axis) {
-
-                if (axis.x) el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';
-                if (axis.y) el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';
-                if (container.style == "restrict") contain();
-
-            }
-            if (m) {
-                if (typeof m === 'object') {
-                    move(m);
-                } else {
-                    move({
-                        x: true,
-                        y: true
-                    });
-                }
-            }
+            if (m.x) el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';
+            if (m.y) el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';
+            if (container.style == "restrict") contain();
             if (fn && fn.dragging) fn.dragging(el, e);
         });
     };
