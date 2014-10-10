@@ -14,7 +14,7 @@ Simple helper library written in pure JS to enable element dragging
 - X / Y (or no) axis constraint
 - Custom handlers for drag start, drag end and dragging actions
 
-###Use
+###Usage
 
 `pk.draggable(opt)`
 
