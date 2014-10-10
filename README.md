@@ -20,7 +20,7 @@ Simple helper library written in pure JS to enable element dragging
 
 Where `opt` is an object of the following type:
 
-```(javascript)
+```javascript
 element: // DOM element to drag - required
 handle: // DOM element to use as drag handle, set to element value by default
 move: // set to 'true' to allow full movement, or 'x' or 'y' to restrict on an axis, false by default
