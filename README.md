@@ -23,6 +23,7 @@ Where `opt` is an object of the following type:
 ```javascript
 element: // DOM element to drag - required
 handle: // DOM element to use as drag handle, set to element value by default
+container: // DOM element to contain dragging within
 move: // set to 'true' to allow full movement, or 'x' or 'y' to restrict on an axis, false by default
 listeners: // optional, object consisting of custom dragstart, dragend and dragging functions to call on action
 ```
