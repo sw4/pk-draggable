@@ -4,7 +4,11 @@ var pk = pk || {};
         var drag = false;
         var el = opt.element;
         var handle = opt.handle || opt.element;
-        var container = opt.container || document.body;
+        var container = {
+            element: opt.container && opt.container.element ? opt.container.element : document.body,
+            style: opt.container && opt.container.style ? opt.container.style : 'restrict'
+        };
+
         pk.addClass(handle, 'pk-drag-draggable');
         var fn = opt.listeners;
         var m = opt.move;
@@ -28,7 +32,7 @@ var pk = pk || {};
             document.onselectstart = function () {
                 return false;
             };
-            containerD = pk.offset(container);
+            containerD = pk.offset(container.element);
             elD = pk.offset(el);
             if (fn && fn.dragstart) fn.dragstart(el, e);
         });
@@ -45,22 +49,24 @@ var pk = pk || {};
             document.onselectstart = function () {
                 return true;
             };
-            if (m && container) {
-                var left = el.getBoundingClientRect().left + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x;
-                var top = el.getBoundingClientRect().top + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y;
-                if (left < containerD.left) {
-                    el.style.left = 0 + 'px';
-                } else if (left + elD.width > containerD.left + containerD.width) {
-                    el.style.left = (containerD.left + containerD.width) - elD.width + 'px';
-                }
-                if (top < containerD.top) {
-                    el.style.top = 0 + 'px';
-                } else if (top + elD.height > containerD.top + containerD.height) {
-                    el.style.top = (containerD.top + containerD.height) - elD.height + 'px';
-                }
+            if (m && container.style == "snap") {
+                contain();
             }
             if (fn && fn.dragend) fn.dragend(el, e);
         });
+
+        function contain() {
+            if (el.offsetLeft < 0) {
+                el.style.left = 0 + 'px';
+            } else if (el.offsetLeft > container.element.offsetWidth - el.offsetWidth) {
+                el.style.left = container.element.offsetWidth - el.offsetWidth + 'px';
+            }
+            if (el.offsetTop < 0) {
+                el.style.top = 0 + 'px';
+            } else if (el.offsetTop > container.element.offsetHeight - el.offsetHeight) {
+                el.style.top = container.element.offsetHeight - el.offsetHeight + 'px';
+            }
+        }
         pk.bindEvent("mousemove", window, function (e) {
             if (!dragging) return;
             e.dragStart = dragStart;
@@ -70,8 +76,11 @@ var pk = pk || {};
             };
 
             function move(axis) {
-                if (axis.x) el.style.left = el.getBoundingClientRect().left + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';
-                if (axis.y) el.style.top = el.getBoundingClientRect().top + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';
+
+                if (axis.x) el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';
+                if (axis.y) el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';
+                if (container.style == "restrict") contain();
+
             }
             if (m) {
                 if (typeof m === 'object') {
