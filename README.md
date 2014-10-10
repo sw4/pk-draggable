@@ -27,7 +27,10 @@ Where `opt` is an object of the following type:
 ```javascript
 element: // DOM element to drag - required
 handle: // DOM element to use as drag handle, set to element value by default
-container: // DOM element to contain dragging within, defaults to document.body
+container: {
+  element:// DOM element to contain dragging within, defaults to document.body
+  style:// 'snap' or 'restrict' (default). 'snap' allows dragging outside the container and snapping back on mouseup, 'restrict' prevents dragging outside the container boundaries
+}
 move: // set to 'true' to allow full movement, or 'x' or 'y' to restrict on an axis, false by default
 listeners: // optional, object consisting of custom dragstart, dragend and dragging functions to call on action
 ```
