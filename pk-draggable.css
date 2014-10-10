@@ -1,0 +1,10 @@
+.pk-drag-draggable {
+    cursor:pointer;
+    cursor:-webkit-grab;
+    cursor:-moz-grab;
+}
+.pk-drag-draggable.pk-drag-dragging {
+    cursor:move;
+    cursor:-webkit-grabbing;
+    cursor:-moz-grabbing;
+}
