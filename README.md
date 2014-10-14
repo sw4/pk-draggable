@@ -1,6 +1,8 @@
 pk-draggable
 ========
 
+[![Build Status](https://travis-ci.org/sw4/pk-draggable.svg?branch=master)](https://travis-ci.org/sw4/pk-draggable)
+
 Simple helper library written in pure JS to enable element dragging
 
 
