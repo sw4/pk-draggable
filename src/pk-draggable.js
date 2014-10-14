@@ -81,7 +81,7 @@ var pk = pk || {};
             };
             if (m.x){ el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';}
             if (m.y){ el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';}
-            if (container.style == "restrict"){ contain();}
+            if (container.style === "restrict"){ contain();}
             if (fn && fn.dragging){ fn.dragging(el, e);}
         });
     };
