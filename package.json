@@ -1,0 +1,38 @@
+{
+  "name": "pk-base",
+  "title": "pk-base",
+  "description": "pk-draggable",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sw4/pk-draggable",
+  "author": {
+    "name": "SW4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sw4/pk-draggable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sw4/pk-draggable/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sw4/pk-draggable/blob/master/LICENSE-MIT"
+    },
+    {
+      "type": "GPL",
+      "url": "https://github.com/sw4/pk-draggable/blob/master/LICENSE-GPL"
+    }
+  ],
+  "main": "dist/pk-draggable",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.14"
+  },
+  "keywords": []
+}
