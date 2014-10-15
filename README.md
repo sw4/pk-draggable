@@ -40,6 +40,12 @@ listeners: // optional, object consisting of custom dragstart, dragend and dragg
 
 ###Custom listeners
 
-Any custom listeners defined are returned the element being dragged and the current event. The event object returned is augmented with two further object properties `dragStart` and `dragEnd`consisting of `x` and `y` key-value pairs.
+Any custom listeners defined are returned both the element being dragged and the related event. The event object is augmented with further objects consisting of `x` and `y` values:
 
-
+```javascript
+dragStart: // the position on the page of of the dragstart event
+dragOffset: // the position within the drag handle the drag event was initiated at
+dragEnd: // the position on the page of of the dragend (or current drag) event
+dragDist: // the pixel distance of the drag
+dragPerc: // the percentage distance of the drag within the parent (constrain) element
+```
