@@ -37,8 +37,8 @@ var pk = pk || {};
             document.onselectstart = function () {
                 return false;
             };
-            containerD = pk.offset(container.element);
-            elD = pk.offset(el);
+            containerD = pk.layout(container.element);
+            elD = pk.layout(el);
             if (fn && fn.dragstart){ fn.dragstart(el, e);}
         });
         pk.bindEvent("mouseup", window, function (e) {
