@@ -22,16 +22,30 @@ var pk = pk || {};
         var startOffset;
         var containerD = {};
         var elD = {};
-        pk.bindEvent("mousedown", handle, function (e) {
-            dragging = true;
-            dragStart = e.dragStart = {
+        
+        function augmentEvent(e){
+            
+            e.dragStart = dragStart;
+            e.dragOffset = startOffset;
+            
+            e.dragEnd = {
                 x: e.clientX,
                 y: e.clientY
             };
-            startOffset = {
-                x: e.clientX - el.getBoundingClientRect().left,
-                y: e.clientY - el.getBoundingClientRect().top
+            e.dragDist = {
+                x:e.dragEnd.x - e.dragStart.x,
+                y:e.dragEnd.y - e.dragStart.y 
             };
+            e.dragPerc = {
+                x:e.dragDist.x / layout(container).width,
+                y:e.dragDist.y / layout(container).height
+            }
+            return e;
+        }
+        
+        pk.bindEvent("mousedown", handle, function (e) {
+            dragging = true;
+            e=augmentEvent(e);
             pk.addClass(handle, 'pk-drag-dragging');
             pk.addClass(document.body, 'pk-noselect');
             document.onselectstart = function () {
@@ -44,11 +58,7 @@ var pk = pk || {};
         pk.bindEvent("mouseup", window, function (e) {
             if (!dragging){ return;}
             dragging = false;
-            e.dragStart = dragStart;
-            e.dragEnd = {
-                x: e.clientX,
-                y: e.clientY
-            };
+            e=augmentEvent(e);
             pk.removeClass(handle, 'pk-drag-dragging');
             pk.removeClass(document.body, 'pk-noselect');
             document.onselectstart = function () {
@@ -74,13 +84,9 @@ var pk = pk || {};
         }
         pk.bindEvent("mousemove", window, function (e) {
             if (!dragging){ return;}
-            e.dragStart = dragStart;
-            e.dragEnd = {
-                x: e.clientX,
-                y: e.clientY
-            };
-            if (m.x){ el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - startOffset.x + 'px';}
-            if (m.y){ el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - startOffset.y + 'px';}
+            e=augmentEvent(e);
+            if (m.x){ el.style.left = el.offsetLeft + (e.dragEnd.x - el.getBoundingClientRect().left) - e.dragOffset.x + 'px';}
+            if (m.y){ el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - e.dragOffset.y + 'px';}
             if (container.style === "restrict"){ contain();}
             if (fn && fn.dragging){ fn.dragging(el, e);}
         });
