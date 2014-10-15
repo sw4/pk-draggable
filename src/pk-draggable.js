@@ -37,8 +37,8 @@ var pk = pk || {};
                 y:e.dragEnd.y - e.dragStart.y 
             };
             e.dragPerc = {
-                x:e.dragDist.x / pk.layout(container).width,
-                y:e.dragDist.y / pk.layout(container).height
+                x:e.dragDist.x / pk.layout(container.element).width,
+                y:e.dragDist.y / pk.layout(container.element).height
             };
             return e;
         }
@@ -79,15 +79,20 @@ var pk = pk || {};
         });
 
         function contain() {
+            
+            
+            var h=container.element.tagName ==="BODY" ? document.documentElement.clientHeight : container.element.offsetHeight,
+                w=container.element.tagName ==="BODY" ? document.documentElement.clientWidth : container.element.offsetWidth;
+            
             if (m.x && el.offsetLeft < 0) {
                 el.style.left = 0 + 'px';
-            } else if (m.x && el.offsetLeft > container.element.offsetWidth - el.offsetWidth) {
-                el.style.left = container.element.offsetWidth - el.offsetWidth + 'px';
+            } else if (m.x && el.offsetLeft > w - el.offsetWidth) {
+                el.style.left = w - el.offsetWidth + 'px';
             }
             if (m.y && el.offsetTop < 0) {
                 el.style.top = 0 + 'px';
-            } else if (m.y && el.offsetTop > container.element.offsetHeight - el.offsetHeight) {
-                el.style.top = container.element.offsetHeight - el.offsetHeight + 'px';
+            } else if (m.y && el.offsetTop > h - el.offsetHeight) {
+                el.style.top = h - el.offsetHeight + 'px';
             }
         }
         pk.bindEvent("mousemove", window, function (e) {
