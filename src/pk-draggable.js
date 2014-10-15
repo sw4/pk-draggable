@@ -39,7 +39,7 @@ var pk = pk || {};
             e.dragPerc = {
                 x:e.dragDist.x / pk.layout(container).width,
                 y:e.dragDist.y / pk.layout(container).height
-            }
+            };
             return e;
         }
         
