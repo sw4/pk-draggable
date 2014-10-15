@@ -45,6 +45,14 @@ var pk = pk || {};
         
         pk.bindEvent("mousedown", handle, function (e) {
             dragging = true;
+            dragStart = {
+                x: e.clientX,
+                y: e.clientY
+            };
+            startOffset = {
+                x: e.clientX - el.getBoundingClientRect().left,
+                y: e.clientY - el.getBoundingClientRect().top
+            };            
             e=augmentEvent(e);
             pk.addClass(handle, 'pk-drag-dragging');
             pk.addClass(document.body, 'pk-noselect');
